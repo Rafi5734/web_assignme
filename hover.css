@@ -1,0 +1,226 @@
+* {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  background-color: #5c5c5c;
+  box-sizing: border-box;
+  /* overflow: hidden; */
+}
+.main-container {
+  width: 100%;
+  height: 100vh;
+  padding: 100px;
+}
+.container-wrapper {
+  width: 100%;
+}
+.container-grid {
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+.item-name {
+    z-index: 99;
+}
+.container .card .first {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: -20px;
+    width: 100%;
+    height: 100%;
+    background-image:  url('https://media.istockphoto.com/id/1148638351/photo/sunday-breakfast.jpg?s=612x612&w=0&k=20&c=QXiLI-lY6wSKFxIZ1VpS3OopD-842NzOlSsCWJ2pzYA=');
+    background-repeat: no-repeat;
+
+}
+
+.container .card .second {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:  url('https://images.immediate.co.uk/production/volatile/sites/30/2013/05/Cheeseburger-3d7c922.jpg');
+    background-repeat: no-repeat;
+
+}
+
+.container .card .icon .fa {
+
+    position: absolute;
+
+    top: 50%;
+
+    left: 50%;
+
+    font-size: 80px;
+
+    color: #fff;
+
+}
+
+.container .card .slide {
+
+    width: 500px;
+
+    height: 500px;
+
+    transition: 0.5s;
+
+}
+
+.container .card .slide.slide1 {
+
+    position: relative;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    z-index: 1;
+
+    transition: .7s;
+
+    /* transform: translateY(100px); */
+
+}
+
+.container .card:hover .slide.slide1{
+
+    transform: translateY(0px);
+
+}
+
+.container .card .slide.slide2 {
+
+    position: relative;
+
+    width: 500px;
+    height: 100px;
+
+    padding: 20px;
+
+    box-sizing: border-box;
+
+    transition: .8s;
+
+    transform: translateY(-130px);
+
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+
+}
+
+.container .card:hover .slide.slide2{
+
+    transform: translateY(0);
+
+}
+
+.container .card .slide .slide2::after{
+
+    content: "";
+
+    position: absolute;
+
+    /* width: 30px;
+
+    height: 4px;
+
+    bottom: 15px;
+
+    left: 50%; */
+
+
+    /* transform: translateX(-50%); */
+
+    background: #2c73df;
+
+}
+
+/* .container .card .slide.slide2 .content p {
+
+    margin: 0;
+
+    padding: 0;
+
+    text-align: center;
+
+    color: #414141;
+
+} */
+
+/* .container .card .slide.slide2 .content h3 {
+
+    margin: 0 0 10px 0;
+
+    padding: 0;
+
+    font-size: 24px;
+
+    text-align: center;
+
+    color: #414141;
+
+}  */
+
+
+@media only screen and (max-width: 1050px) {
+  .container-grid {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin-top: 20px;
+  }
+  .food-image{
+    width: 100%;
+    height: 100%;
+  }
+}
+@media only screen and (max-width: 700px) {
+  .container-grid {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    margin-top: 20px;
+  }
+  .food-image{
+    width: 100%;
+    height: 100%;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .container-grid {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    margin-top: 20px;
+  }
+  .food-image{
+    width: 100%;
+    height: 100%;
+  }
+  .grid-item{
+    width: 100%;
+    height: 300px;
+  }
+}
+
+@media only screen and (max-width: 435px) {
+  .container-grid {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    margin-top: 20px;
+  }
+  .food-image{
+    width: 100%;
+    height: 100%;
+  }
+  .grid-item{
+    width: 100%;
+    height: 300px;
+  }
+}
