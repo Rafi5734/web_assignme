@@ -7,35 +7,18 @@ var dataArray = [];
 const deleteBtn = function (id) {
   $("#productId-" + id).fadeOut(1000, function () {
     $(this).remove();
+    console.log(dataArray.pop(id));
+    const filterItem = dataArray.filter(function (item) {
+      return (item.id === id);
+    });
+    totalPrice = totalPrice - filterItem[0].price;
+    console.log(filterItem[0].price);
+    $("#totalPrice").text(totalPrice);
+    console.log(dataArray);
   });
-
-  // $.get("./fake_data.json", function (data) {
-  //   let updateArray = [];
-  //   dataArray = data;
-
-  //   // const result = $.grep(data, function (e) {
-
-  //   //   if (e.id == id) {
-
-  //   //   }
-
-  //   // })
-
-  //   // console.log(result);
-
-  //   // result.splice(result.indexOf(id), 1);
-  //   var updateData = data.filter(function (e) {
-  //     if (e.id == id) {
-  //       return dataArray.splice(dataArray.indexOf(id), 1);
-  //     }
-  //   });
-
-  //   console.log(updateData);
-  //   console.log(id);
-  // });
-  // // console.log(dataArray);
-
-  // console.log(id);
+  
+  
+  
 };
 
 $("#refresh_id").click(function () {
@@ -66,19 +49,60 @@ $("#dataInput").on("keypress", function (e) {
     if (myData === "") {
       alert("Enter a name");
     } else {
-      const updateContent = `<div id="productId" class="col-md-4 mt-5">
+      var arrLength = dataArray.length;
+      const updateContent = `<div id="productId-${++arrLength}" class="col-md-4 mt-5">
                         <div id="product_wrapper" class="d-flex flex-column">
                             <p>Id: <span>23</span></p>
                             <p>Name: <span>${myData}</span></p>
                             <p>Price: <span>444</span></p>
-                            <button onclick="deleteBtn()" type="button" class="btn btn-danger">Remove</button>
+                            <button onclick="deleteBtn(${arrLength})" type="button" class="btn btn-danger">Remove</button>
                         </div>
                     </div>`;
       $("#rows").append(updateContent);
+      console.log(updateContent);
       $("#dataInput").val("");
+      dataArray.push({ "price": 444 });
+      
+      
+      console.log(totalPrice);
+      let restLengArr = dataArray.length - 5;
+      let multiAdd = 444 * restLengArr
+      finalPrice = (multiAdd + totalPrice);
+
+      $("#totalPrice").text(finalPrice);
     }
+  } 
+});
+
+$("#button-addon2").on("click", function (e) {
+  let myData = $("#dataInput").val();
+  if (myData === "") {
+    var arrLength = dataArray.length;
+    const updateContent = `<div id="productId-${++arrLength}" class="col-md-4 mt-5">
+                        <div id="product_wrapper" class="d-flex flex-column">
+                            <p>Id: <span>23</span></p>
+                            <p>Name: <span>${myData}</span></p>
+                            <p>Price: <span>444</span></p>
+                            <button onclick="deleteBtn(${arrLength})" type="button" class="btn btn-danger">Remove</button>
+                        </div>
+                    </div>`;
+    $("#rows").append(updateContent);
+    $("#dataInput").val("");
+    dataArray.push({ price: 444 });
+
+    console.log(totalPrice);
+    let restLengArr = dataArray.length - 5;
+    let multiAdd = 444 * restLengArr;
+    finalPrice = multiAdd + totalPrice;
+
+    $("#totalPrice").text(finalPrice);
+  } else {
+    alert("Enter a name");
+    
   }
 });
+
+
 
 const addItem = function () {
   $("#quantityId").val(++totalQuantity);
@@ -88,7 +112,8 @@ const addItem = function () {
 };
 
 $.get("./fake_data.json", function (data) {
-  content = data
+  dataArray = data;
+  content = dataArray
     .map(
       (d) => `<div id="productId-${d.id}" class="mt-5 col-md-4">
                 <div id="product_wrapper" class="d-flex flex-column">
@@ -114,9 +139,9 @@ $.get("./fake_data.json", function (data) {
     .join("");
 
   $("#rows").html(content);
-  data.map((d) => {
+  dataArray.map((d) => {
     totalPrice = parseInt(totalPrice + d.price);
-    console.log(totalPrice);
+    $("#totalPrice").text(totalPrice);
+    // console.log(totalPrice);
   });
-  $("#totalPrice").text(totalPrice);
 });
