@@ -1,33 +1,32 @@
 [
-    {
-        "id": 0,
-        "name": "tttt",
-        "price": 333,
-        "quantity": "1"
-    },
-    {
-      "id": 1,
-      "name": "rrrr",
-      "price": 555,
-      "quantity": "1"
-    },
-    {
-      "id": 2,
-      "name": "fff",
-      "price": 777,
-      "quantity": "1"
-    },
-
-    {
-      "id": 3,
-      "name": "kjkj",
-      "price": 777,
-      "quantity": "1"
-    },
-    {
-      "id": 4,
-      "name": "kjkj",
-      "price": 900,
-      "quantity": "1"
-    }
+  {
+    "id": 0,
+    "name": "A",
+    "price": 10,
+    "quantity": 1
+  },
+  {
+    "id": 1,
+    "name": "B",
+    "price": 10,
+    "quantity": 1
+  },
+  {
+    "id": 2,
+    "name": "C",
+    "price": 10,
+    "quantity": 1
+  },
+  {
+    "id": 3,
+    "name": "D",
+    "price": 10,
+    "quantity": 1
+  },
+  {
+    "id": 4,
+    "name": "E",
+    "price": 10,
+    "quantity": 1
+  }
 ]

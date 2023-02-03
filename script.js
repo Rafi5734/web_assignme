@@ -1,45 +1,137 @@
+const products = [
+  {
+    id: 0,
+    name: "A",
+    price: 10,
+    quantity: 1,
+  },
+  {
+    id: 1,
+    name: "B",
+    price: 10,
+    quantity: 1,
+  },
+  {
+    id: 2,
+    name: "C",
+    price: 10,
+    quantity: 1,
+  },
+  {
+    id: 3,
+    name: "D",
+    price: 10,
+    quantity: 1,
+  },
+  {
+    id: 4,
+    name: "E",
+    price: 10,
+    quantity: 1,
+  },
+  {
+    id: 5,
+    name: "F",
+    price: 10,
+    quantity: 1,
+  },
+];
 var content = "";
 var quantity = 0;
 var totalPrice = 0;
 var totalQuantity = 1;
 var dataArray = [];
+let priceArray = [];
+
+const addItem = function (id, price) {
+  const findItem = dataArray.filter(function (item) {
+    return item.id === id;
+  });
+
+  let finalQuantity = ++findItem[0].quantity;
+  $("#quantityId-" + id).val(finalQuantity);
+  // let itemPrice = findItem[0].price;
+
+  var finalPrice = finalQuantity * price;
+  console.log(finalPrice);
+  $("#priceId-" + id).html(finalPrice);
+
+  dataArray[id].price = finalPrice;
+
+  // console.log(dataArray[id].price);
+
+  console.log(dataArray);
+  $("#totalPrice").text(totalPrice + finalPrice);
+
+  console.log(totalPrice + finalPrice);
+  console.log(finalPrice);
+
+  // console.log("final totalPrice----", subTotal - dataArray[id].price);
+
+  // console.log(objIndex);
+  // $("#quantityId-" + id).val(++totalQuantity);
+  // $("#quantityId-" + id).attr("value", totalQuantity);
+  // var currentQuantity = $("#quantityId-" + id).val();
+  // console.log(currentQuantity);
+};
 
 const deleteBtn = function (id) {
-  $("#productId-" + id).fadeOut(1000, function () {
-    $(this).remove();
-    console.log(dataArray.pop(id));
-    const filterItem = dataArray.filter(function (item) {
-      return (item.id === id);
-    });
-    totalPrice = totalPrice - filterItem[0].price;
-    console.log(filterItem[0].price);
-    $("#totalPrice").text(totalPrice);
-    console.log(dataArray);
+  const filterItem = dataArray.filter(function (item) {
+    return item.id === id;
   });
-  
-  
-  
+  $("#productId-" + id).fadeOut(1000, function () {
+    $(this).remove(filterItem);
+  });
+  dataArray.slice(id);
+  console.log(filterItem);
+  console.log(dataArray.length);
+  totalPrice = totalPrice - filterItem[0].price;
+  $("#totalPrice").text(totalPrice);
+
+  console.log(totalPrice);
+  console.log(dataArray);
 };
 
 $("#refresh_id").click(function () {
   location.reload(true);
 });
 
-$("#button-addon2").click(function (e) {
+$("#button-addon2").on("click", function (e) {
   let myData = $("#dataInput").val();
   if (myData === "") {
     alert("Enter a name");
   } else {
-    const updateContent = `<div id="productId" class="col-md-4 mt-5">
+    var arrLength = dataArray.length;
+    const updateContent = `<div id="productId-${++arrLength}" class="col-md-4 mt-5">
                             <div id="product_wrapper" class="d-flex flex-column">
                                 <p>Id: <span>23</span></p>
                                 <p>Name: <span>${myData}</span></p>
-                                <p>Price: <span>444</span></p>
-                                <button onclick="deleteBtn()" type="button" class="btn btn-danger">Remove</button>
+                                <div class="input-group mb-3">
+                                  <input
+                                      type="text"
+                                      class="form-control"
+                                      placeholder="Add Quantity"
+                                      aria-label="Recipient's username"
+                                      aria-describedby="button-addon2"
+                                      id="quantityId"
+                                      value=""
+                                    />
+                                  <button id="addItem" onclick="addItem()" class="btn btn-outline-secondary" type="button">Add</button>
+                              </div>
+                                  <p>Price: <span>444</span></p>
+                                  <button onclick="deleteBtn(${arrLength})" type="button" class="btn btn-danger">Remove</button>
                             </div>
                           </div>`;
     $("#rows").append(updateContent);
     $("#dataInput").val("");
+    dataArray.push({ id: arrLength, price: 10 });
+
+    console.log(updateContent);
+    let restLengArr = dataArray.length - 5;
+    let multiAdd = 10 * restLengArr;
+    totalPrice = multiAdd + totalPrice;
+
+    $("#totalPrice").text(totalPrice);
   }
 });
 
@@ -50,66 +142,44 @@ $("#dataInput").on("keypress", function (e) {
       alert("Enter a name");
     } else {
       var arrLength = dataArray.length;
-      const updateContent = `<div id="productId-${++arrLength}" class="col-md-4 mt-5">
+      // let finalQuantity = ++findItem[0].quantity;
+      // $("#quantityId-" + id).val(finalQuantity);
+      console.log($("#quantityId-" + ++arrLength));
+      const updateContent = `<div id="productId-${arrLength}" class="col-md-4 mt-5">
                         <div id="product_wrapper" class="d-flex flex-column">
                             <p>Id: <span>23</span></p>
                             <p>Name: <span>${myData}</span></p>
-                            <p>Price: <span>444</span></p>
+                            <div class="input-group mb-3">
+                              <input
+                                  type="text"
+                                  class="form-control"
+                                  placeholder="Add Quantity"
+                                  aria-label="Recipient's username"
+                                  aria-describedby="button-addon2"
+                                  id="quantityId-${arrLength}"
+                                  value=1
+                                />
+                               <button id="addItem" onclick="addItem(${arrLength})" class="btn btn-outline-secondary" type="button">Add</button>
+                            </div>
+                            <p>Price: <span>10</span></p>
                             <button onclick="deleteBtn(${arrLength})" type="button" class="btn btn-danger">Remove</button>
                         </div>
                     </div>`;
       $("#rows").append(updateContent);
       console.log(updateContent);
       $("#dataInput").val("");
-      dataArray.push({ "price": 444 });
-      
-      
-      console.log(totalPrice);
-      let restLengArr = dataArray.length - 5;
-      let multiAdd = 444 * restLengArr
-      finalPrice = (multiAdd + totalPrice);
+      dataArray.push({ id: arrLength, price: 10 });
 
-      $("#totalPrice").text(finalPrice);
+      // console.log(totalPrice);
+      console.log(dataArray);
+      let restLengArr = dataArray.length - 6;
+      let multiAdd = 10 * restLengArr;
+      totalPrice = multiAdd + totalPrice;
+
+      $("#totalPrice").text(totalPrice);
     }
-  } 
-});
-
-$("#button-addon2").on("click", function (e) {
-  let myData = $("#dataInput").val();
-  if (myData === "") {
-    var arrLength = dataArray.length;
-    const updateContent = `<div id="productId-${++arrLength}" class="col-md-4 mt-5">
-                        <div id="product_wrapper" class="d-flex flex-column">
-                            <p>Id: <span>23</span></p>
-                            <p>Name: <span>${myData}</span></p>
-                            <p>Price: <span>444</span></p>
-                            <button onclick="deleteBtn(${arrLength})" type="button" class="btn btn-danger">Remove</button>
-                        </div>
-                    </div>`;
-    $("#rows").append(updateContent);
-    $("#dataInput").val("");
-    dataArray.push({ price: 444 });
-
-    console.log(totalPrice);
-    let restLengArr = dataArray.length - 5;
-    let multiAdd = 444 * restLengArr;
-    finalPrice = multiAdd + totalPrice;
-
-    $("#totalPrice").text(finalPrice);
-  } else {
-    alert("Enter a name");
-    
   }
 });
-
-
-
-const addItem = function () {
-  $("#quantityId").val(++totalQuantity);
-  $("#quantityId").attr("value", totalQuantity);
-  var currentQuantity = $("#quantityId").val();
-  console.log(currentQuantity);
-};
 
 $.get("./fake_data.json", function (data) {
   dataArray = data;
@@ -126,12 +196,12 @@ $.get("./fake_data.json", function (data) {
                             placeholder="Add Quantity"
                             aria-label="Recipient's username"
                             aria-describedby="button-addon2"
-                            id="quantityId"
+                            id="quantityId-${d.id}"
                             value=${d.quantity}
                         />
-                        <button id="addItem" onclick="addItem()" class="btn btn-outline-secondary" type="button">Add</button>
+                        <button id="addItem" onclick="addItem(${d.id}, ${d.price})" class="btn btn-outline-secondary" type="button">Add</button>
                     </div>
-                    <p>Price: <span>${d.price}</span></p>
+                    <p>Price: <span id="priceId-${d.id}">${d.price}</span></p>
                     <button onclick="deleteBtn(${d.id})" type="button" class="btn btn-danger">Remove</button>
                 </div>
             </div>`
@@ -142,6 +212,6 @@ $.get("./fake_data.json", function (data) {
   dataArray.map((d) => {
     totalPrice = parseInt(totalPrice + d.price);
     $("#totalPrice").text(totalPrice);
-    // console.log(totalPrice);
+    // console.log("final totalPrice----", totalPrice);
   });
 });

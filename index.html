@@ -24,19 +24,11 @@
   <body>
     <div class="main-container" style="margin: 0">
       <div class="container-wrapper">
-        <h3 style="margin-top: 0; color: white; font-weight: 400">
-          PROJECT WE HAVE DONE
-        </h3>
-        <button id="refresh_id" type="button" class="mb-5 btn btn-success w-25">
-          Refresh
-        </button>
-      </div>
-
-      <div class="input-group mb-3 w-25">
+    <div class="input-group mb-3 w-25">
         <input
           type="text"
           class="form-control"
-          placeholder="Recipient's username"
+          placeholder="Product"
           aria-label="Recipient's username"
           aria-describedby="button-addon2"
           id="dataInput"
@@ -50,41 +42,28 @@
         </button>
       </div>
 
-      <div class="text-white">
-        <h3>Total Price: <span id="totalPrice">1000</span></h3>
-      </div>
-
-      <div class="text-white">
-        <div class="container">
-          <div class="row" id="rows">
-            <!-- <div id="something"></div> -->
-            <!-- <div class="col-md-4">
-              <div class="d-flex flex-column">
-                <p id="item">Id: <span>1</span></p>
-                <p>Name: <span>tttt</span></p>
-                <p>Price: <span>444</span></p>
-                <div class="input-group mb-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Add Quantity"
-                    aria-label="Recipient's username"
-                    aria-describedby="button-addon2"
-                  />
-                  <button
-                    class="btn btn-outline-secondary"
-                    type="button"
-                    id="button-addon2"
-                  >
-                    Add
-                  </button>
-                </div>
-                <button type="button" class="btn btn-danger">Remove</button>
-              </div>
-            </div> -->
-          </div>
+        <button id="refresh_id" type="button" class="mb-5 btn btn-success w-25">
+          Refresh
+        </button>
+        <div class="text-danger mb-5">
+          <h3>Total Price: <span>0</span></h3>
         </div>
       </div>
+      <div>
+        <button class="btn btn-success">Show My Products</button>
+        <h5>Product List</h5>
+
+      </div>
+
+
+
+      <!-- <div class="text-white">
+        <div class="container">
+          <div class="row" id="rows">
+           
+          </div>
+        </div>
+      </div> -->
     </div>
 
     <script src="script.js"></script>
