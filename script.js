@@ -17,31 +17,48 @@ const products = [
     price: 10,
     quantity: 1,
   },
-  {
-    id: 3,
-    name: "D",
-    price: 10,
-    quantity: 1,
-  },
-  {
-    id: 4,
-    name: "E",
-    price: 10,
-    quantity: 1,
-  },
-  {
-    id: 5,
-    name: "F",
-    price: 10,
-    quantity: 1,
-  },
+  // {
+  //   id: 3,
+  //   name: "D",
+  //   price: 10,
+  //   quantity: 1,
+  // },
+  // {
+  //   id: 4,
+  //   name: "E",
+  //   price: 10,
+  //   quantity: 1,
+  // },
+  // {
+  //   id: 5,
+  //   name: "F",
+  //   price: 100,
+  //   quantity: 1,
+  // },
+  // {
+  //   id: 6,
+  //   name: "G",
+  //   price: 15,
+  //   quantity: 1,
+  // },
 ];
+
+
 var content = "";
 var quantity = 0;
 var totalPrice = 0;
 var totalQuantity = 1;
 var dataArray = [];
 let priceArray = [];
+
+// console.log(products);
+
+products.map(function (product) {
+  totalPrice = totalPrice + product.price;
+  // console.log(parseInt(totalPrice));
+});
+
+$("#totalPrice").text(totalPrice);
 
 const addItem = function (id, price) {
   const findItem = dataArray.filter(function (item) {
@@ -75,22 +92,33 @@ const addItem = function (id, price) {
   // console.log(currentQuantity);
 };
 
-const deleteBtn = function (id) {
-  const filterItem = dataArray.filter(function (item) {
-    return item.id === id;
-  });
-  $("#productId-" + id).fadeOut(1000, function () {
-    $(this).remove(filterItem);
-  });
-  dataArray.slice(id);
-  console.log(filterItem);
-  console.log(dataArray.length);
-  totalPrice = totalPrice - filterItem[0].price;
-  $("#totalPrice").text(totalPrice);
+// const deleteBtn = function (id) {
+//   const filterItem = dataArray.filter(function (item) {
+//     return item.id === id;
+//   });
+//   $("#productId-" + id).fadeOut(1000, function () {
+//     $(this).remove(filterItem);
+//   });
+//   dataArray.splice(id,1);
+//   console.log(filterItem);
+//   console.log(dataArray.length);
+//   totalPrice = totalPrice - filterItem[0].price;
+//   $("#totalPrice").text(totalPrice);
 
-  console.log(totalPrice);
-  console.log(dataArray);
-};
+//   console.log(totalPrice);
+//   console.log(dataArray);
+// };
+
+function deleteBtn(id) {
+  console.log(id);
+ 
+  console.log(products.splice(id, 1));
+  // $("#productId-" + id).fadeOut(1000, function () {
+  //   $(this).remove();
+  // });
+  // console.log(removeItemPrice);
+  console.log(products);
+}
 
 $("#refresh_id").click(function () {
   location.reload(true);
@@ -181,37 +209,65 @@ $("#dataInput").on("keypress", function (e) {
   }
 });
 
-$.get("./fake_data.json", function (data) {
-  dataArray = data;
-  content = dataArray
-    .map(
-      (d) => `<div id="productId-${d.id}" class="mt-5 col-md-4">
-                <div id="product_wrapper" class="d-flex flex-column">
-                    <p id="item">Id: <span id="itemId">${d.id}</span></p>
-                    <p>Name: <span>${d.name}</span></p>
-                    <div class="input-group mb-3">
-                        <input
-                            type="text"
-                            class="form-control"
-                            placeholder="Add Quantity"
-                            aria-label="Recipient's username"
-                            aria-describedby="button-addon2"
-                            id="quantityId-${d.id}"
-                            value=${d.quantity}
-                        />
-                        <button id="addItem" onclick="addItem(${d.id}, ${d.price})" class="btn btn-outline-secondary" type="button">Add</button>
-                    </div>
-                    <p>Price: <span id="priceId-${d.id}">${d.price}</span></p>
-                    <button onclick="deleteBtn(${d.id})" type="button" class="btn btn-danger">Remove</button>
-                </div>
-            </div>`
-    )
-    .join("");
+var content = products
+  .map((product) => 
+    // console.log(product);
+    `<div id="productId-${product.id}" class="mt-5 col-md-4">
+                 <div id="product_wrapper" class="d-flex flex-column">
+                     <p id="item">Id: <span id="itemId">${product.id}</span></p>
+                     <p>Name: <span>${product.name}</span></p>
+                     <div class="input-group mb-3">
+                         <input
+                             type="text"
+                             class="form-control"
+                             placeholder="Add Quantity"
+                             aria-label="Recipient's username"
+                             aria-describedby="button-addon2"
+                             id="quantityId-${product.id}"
+                             value=${product.quantity}
+                         />
+                         <button id="addItem" onclick="addItem(${product.id}, ${product.price})" class="btn btn-outline-secondary" type="button">Add</button>
+                     </div>
+                     <p>Price: <span id="priceId-${product.id}">${product.price}</span></p>
+                     <button onclick="deleteBtn(${product.id})" type="button" class="btn btn-danger">Remove</button>
+                 </div>
+             </div>`
+  ).join("");
+  
 
   $("#rows").html(content);
-  dataArray.map((d) => {
-    totalPrice = parseInt(totalPrice + d.price);
-    $("#totalPrice").text(totalPrice);
-    // console.log("final totalPrice----", totalPrice);
-  });
-});
+
+// $.get("./fake_data.json", function (data) {
+//   dataArray = data;
+//   content = dataArray
+//     .map(
+//       (d) => `<div id="productId-${d.id}" class="mt-5 col-md-4">
+//                 <div id="product_wrapper" class="d-flex flex-column">
+//                     <p id="item">Id: <span id="itemId">${d.id}</span></p>
+//                     <p>Name: <span>${d.name}</span></p>
+//                     <div class="input-group mb-3">
+//                         <input
+//                             type="text"
+//                             class="form-control"
+//                             placeholder="Add Quantity"
+//                             aria-label="Recipient's username"
+//                             aria-describedby="button-addon2"
+//                             id="quantityId-${d.id}"
+//                             value=${d.quantity}
+//                         />
+//                         <button id="addItem" onclick="addItem(${d.id}, ${d.price})" class="btn btn-outline-secondary" type="button">Add</button>
+//                     </div>
+//                     <p>Price: <span id="priceId-${d.id}">${d.price}</span></p>
+//                     <button onclick="deleteBtn(${d.id})" type="button" class="btn btn-danger">Remove</button>
+//                 </div>
+//             </div>`
+//     )
+//     .join("");
+
+//   $("#rows").html(content);
+//   dataArray.map((d) => {
+//     totalPrice = parseInt(totalPrice + d.price);
+//     $("#totalPrice").text(totalPrice);
+//     // console.log("final totalPrice----", totalPrice);
+//   });
+// });
