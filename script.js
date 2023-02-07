@@ -3,18 +3,18 @@ const products = [
     id: 0,
     name: "A",
     price: 10,
-    quantity: 1,
+    quantity: 2,
   },
   {
     id: 1,
     name: "B",
-    price: 10,
-    quantity: 1,
+    price: 20,
+    quantity: 5,
   },
   {
     id: 2,
     name: "C",
-    price: 10,
+    price: 30,
     quantity: 1,
   },
   // {
@@ -43,13 +43,17 @@ const products = [
   // },
 ];
 
-
 var content = "";
-var quantity = 0;
-var totalPrice = 0;
-var totalQuantity = 1;
+var quantity = 1;
+var totalPriceArr = [];
+var totalQuantity = 0;
 var dataArray = [];
 let priceArray = [];
+var tempArr = [];
+var addItemArr = [];
+var sum = 0;
+var mergeArray = [];
+var mergeDataArr1 = []; 
 
 // const addItem = function (id, price) {
 //   const findItem = dataArray.filter(function (item) {
@@ -224,13 +228,35 @@ $("#refresh_id").click(function () {
 //   });
 // });
 
-$("#button-addon2").on("click", function (e) { 
-  var addValue = $("#dataInput").val();
+$("#button-addon2").on("click", function (e) {
+  var addValue = $("#dataInput").val().toUpperCase();
   if (addValue) {
     var arrLength = products.length;
-        const updateContent = `<div id="productId-${++arrLength}" class="col-md-4 mt-5">
+    console.log("updateArrLength", arrLength)
+    products.push({ id: arrLength, name: addValue, price: 10, quantity: 1 });
+    if (products.length > arrLength) {
+      console.log(
+        "A new element has been added:",
+        tempArr.push(
+          products[products.length - 1].price *
+            products[products.length - 1].quantity
+        )
+      );
+      console.log("A new price has been added:", tempArr);
+      mergeArray = totalPriceArr.concat(tempArr);
+      console.log(products[products.length - 1]);
+      console.log("A new price sum added:", mergeArray);
+      sum = mergeArray.reduce((total, current) => total + current, 0);
+      $("#totalPrice").text(sum);
+    }
+    console.log("temp array  ", tempArr);
+    // totalPriceArr.concat(tempArr);
+    console.log("after concat added:", totalPriceArr);
+    
+
+    const updateContent = `<div id="productId-${arrLength}" class="col-md-4 mt-5">
                                 <div id="product_wrapper" class="d-flex flex-column">
-                                    <p>Id: <span>23</span></p>
+                                    <p>Id: <span>${arrLength}</span></p>
                                     <p>Name: <span>${addValue}</span></p>
                                     <div class="input-group mb-3">
                                       <input
@@ -239,27 +265,24 @@ $("#button-addon2").on("click", function (e) {
                                           placeholder="Add Quantity"
                                           aria-label="Recipient's username"
                                           aria-describedby="button-addon2"
-                                          id="quantityId"
-                                          value=""
+                                          id="quantityId-${arrLength}"
+                                          value="1"
                                         />
-                                      <button id="addItem" onclick="addItem()" class="btn btn-outline-secondary" type="button">Add</button>
+                                      <button id="addItem" onclick="addItem(${arrLength})" class="btn btn-outline-secondary" type="button">Add</button>
                                   </div>
-                                      <p>Price: <span priceId-${arrLength}>10</span></p>
+                                      <p>Main Price: <span priceId-${arrLength}>10</span></p>
                                       <button onclick="deleteBtn(${arrLength})" type="button" class="btn btn-danger">Remove</button>
                                 </div>
                               </div>`;
-        $("#rows").append(updateContent);
-    console.log(products.length);
+    $("#rows").append(updateContent);
+    // console.log(products);
     $("#dataInput").val("");
-  } else { 
+  } else {
     alert("Please enter a value");
   }
-  
-})
-
+});
 
 $("#show-product").on("click", function (e) {
-  
   // console.log(totalPrice)
   content = products
     .map(
@@ -277,19 +300,73 @@ $("#show-product").on("click", function (e) {
                               id="quantityId-${d.id}"
                               value=${d.quantity}
                           />
-                          <button id="addItem" onclick="addItem(${d.id}, ${d.price})" class="btn btn-outline-secondary" type="button">Add</button>
+                          <button id="addItem" onclick="addItem(${
+                            d.id
+                          })" class="btn btn-outline-secondary" type="button">Add</button>
                       </div>
-                      <p>Price: <span id="priceId-${d.id}">${d.price}</span></p>
-                      <button onclick="deleteBtn(${d.id})" type="button" class="btn btn-danger">Remove</button>
+                      <p>Sub Price: <span id="priceId-${d.id}">${
+        d.price * d.quantity
+      }</span></p>
+                      <p>Main Price: <span id="priceId">${d.price}</span></p>
+                      <button onclick="deleteBtn(${
+                        d.id
+                      })" type="button" class="btn btn-danger">Remove</button>
                   </div>
               </div>`
     )
     .join("");
   $("#rows").html(content);
+  products.map((d) => {
+    console.log("final totalPrice----", totalPriceArr.push(d.price * d.quantity));
+  });
+  console.log(totalPriceArr);
+  sum = totalPriceArr.reduce((total, current) => total + current, 0);
+  console.log("A new price sum added:", sum);
+  // totalPrice = parseInt(totalPrice + d.price);
+  $("#totalPrice").text(sum);
 
-    products.map((d) => {
-      totalPrice = parseInt(totalPrice + d.price);
-      $("#totalPrice").text(totalPrice);
-      console.log("final totalPrice----", totalPrice);
-    });
-})
+
+
+  //  for checking purpose
+
+  
+});
+
+function addItem(id) {
+  var tempCount = 1;
+  var initQuantity = $(`#quantityId-${id}`).val();
+  let initPrice = $(`#priceId-${id}`).text();
+  var priceQuantity = (parseInt(initQuantity) + 1) * products[id].price;
+  // var updateQuantity = (quantity += parseInt(initQuantity));
+  $(`#quantityId-${id}`).val((tempCount += parseInt(initQuantity)));
+  
+  console.log("basic price: ", parseInt(initPrice));
+  console.log("basic quantity and price: ", priceQuantity);
+  console.log("totalQuantity--", totalQuantity);
+  
+  $(`#priceId-${id}`).text((parseInt(initQuantity) + 1) * products[id].price);
+  // console.log(
+  //   "total price with update quantity---",
+  //   initQuantity * parseInt(initPrice)
+  // );
+  //  console.log("increment-----", (quantity += parseInt(initQuantity)));
+  tempArr.push(products[id].price);
+  console.log("id-----", tempArr);
+  mergeArray = totalPriceArr.concat(tempArr);
+  console.log("merge-----", mergeArray[id].quantity = tempCount);
+  console.log("temp count-----", tempCount);
+  console.log("merge array -----", mergeArray[id]);
+  console.log("check quantity -----", (products[id].quantity = tempCount));
+  sum = mergeArray.reduce((total, current) => total + current, 0);
+  $("#totalPrice").text(sum);
+  console.log("A new price sum added:", sum);
+  console.log("all products array -----", products);
+}
+
+function deleteBtn(id) {
+  // mergeArray.splice(id, 1);
+  console.log("product index-----", products.splice(id,1))
+  console.log("product id-----", id);
+  products.map(del => console.log(del));
+  console.log("merge array-----", mergeArray);
+}
