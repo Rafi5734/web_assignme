@@ -24,23 +24,23 @@
   <body>
     <div class="main-container" style="margin: 0">
       <div class="container-wrapper">
-    <div class="input-group mb-3 w-25">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Product"
-          aria-label="Recipient's username"
-          aria-describedby="button-addon2"
-          id="dataInput"
-        />
-        <button
-          class="btn btn-outline-secondary"
-          type="button"
-          id="button-addon2"
-        >
-          Submit
-        </button>
-      </div>
+        <div class="input-group mb-3 w-25">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Product"
+            aria-label="Recipient's username"
+            aria-describedby="button-addon2"
+            id="dataInput"
+          />
+          <button
+            class="btn btn-outline-secondary"
+            type="button"
+            id="button-addon2"
+          >
+            Submit
+          </button>
+        </div>
 
         <button id="refresh_id" type="button" class="mb-5 btn btn-success w-25">
           Refresh
@@ -50,16 +50,18 @@
         </div>
       </div>
       <div>
-        <button class="btn btn-success">Show My Products</button>
-        <h5 class="mt-3">Product List</h5>
+        <button class="btn btn-success" id="show-product">
+          Show My Products
+        </button>
+        <h5>Product List</h5>
         <div class="container">
-          <div class="row" id="rows">
-        
+          <div id="rows" class="row">
+            <!-- <div class="col">Column</div>
+            <div class="col">Column</div>
+            <div class="col">Column</div> -->
           </div>
         </div>
       </div>
-
-
 
       <!-- <div class="text-white">
         <div class="container">
